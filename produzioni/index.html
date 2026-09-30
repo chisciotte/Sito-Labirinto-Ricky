@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chisciotte Produzioni – Ricky Farina</title>
+<meta name="description" content="I film di Ricky Farina: videoritratti, film casalinghi e di quartiere.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0D1520">
+<!-- <link rel="canonical" href="https://rickyfarina.it/produzioni/"> da riattivare col dominio -->
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../font/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/base.css?v=81">
+<link rel="stylesheet" href="../css/sezione.css?v=81">
+<link rel="stylesheet" href="../css/produzioni.css?v=81">
+</head>
+<body class="s-produzioni">
+
+<header class="testata">
+  <div class="sinistra">
+    <a class="firma" href="../">Ricky Farina</a>
+    <span class="mestiere">filmmaker e aforista</span>
+  </div>
+</header>
+
+<main class="stanza">
+ <div class="foglio">
+  <a class="ritorno" href="../">torna al labirinto</a>
+
+  <div class="apertura-p">
+    <p class="occhiello">Chisciotte Produzioni</p>
+    <h1>Il più grande regista casalingo <em>(e di quartiere)</em> del mondo</h1>
+    <p class="glossa">videoritratti, film casalinghi e di quartiere</p>
+    <p class="marchio-casa">
+      <span class="logo">qui il logo</span>
+      <span class="dicitura">Chisciotte Produzioni, casa di produzione immaginaria</span>
+    </p>
+  </div>
+
+  <section class="blocco menu">
+    <h2>Menu della casa</h2>
+    <ol>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">01</span><span class="voce">I dieci imperdibili</span><span class="punti"></span><span class="nota">per chi non sa cosa scegliere</span></a></li>
+
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">02</span><span class="voce">Videoritratti</span><span class="punti"></span><span class="nota">il volto umano</span></a></li>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">03</span><span class="voce">Film casalinghi</span><span class="punti"></span><span class="nota">girati in casa</span></a></li>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">04</span><span class="voce">Film di quartiere</span><span class="punti"></span><span class="nota">incontrati per strada</span></a></li>
+
+      <li><details>
+        <summary class="riga-menu"><span class="n">05</span><span class="voce">Shorts</span><span class="punti"></span><span class="nota">in pochi secondi</span><span class="segno" aria-hidden="true">+</span></summary>
+        <ul class="sotto-voci">
+          <li><a href="#" target="_blank" rel="noopener">Ti presento una persona</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Cosa pensi di Ricky Farina</a></li>
+        </ul>
+      </details></li>
+
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">06</span><span class="voce">Lungometraggio</span><span class="punti"></span><span class="nota">Yorik, un film su Silvano Agosti e Franco Piavoli</span></a></li>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">07</span><span class="voce"><svg class="yt" viewBox="0 0 28 20" aria-hidden="true"><path class="scocca" d="M25.9 3.1c-.3-1.1-1.2-2-2.3-2.3C21.6.25 14 .25 14 .25s-7.6 0-9.6.55C3.3 1.1 2.4 2 2.1 3.1 1.55 5.1 1.55 10 1.55 10s0 4.9.55 6.9c.3 1.1 1.2 2 2.3 2.3 2 .55 9.6.55 9.6.55s7.6 0 9.6-.55c1.1-.3 2-1.2 2.3-2.3.55-2 .55-6.9.55-6.9s0-4.9-.55-6.9z"/><path class="play" d="M11.2 14.3L18.5 10l-7.3-4.3z"/></svg>Iscriviti al canale</span><span class="punti"></span><span class="nota">per non perdere il prossimo film</span></a></li>
+    </ol>
+  </section>
+
+  <section class="blocco caso riquadro">
+    <h2>Un giorno a caso nell'esistenza di Ricky</h2>
+    <p class="sotto">Perditi insieme a me.</p>
+    <div class="data attesa" id="data"><span class="vuoto">gg</span><span class="sep">·</span><span class="vuoto">mm</span><span class="sep">·</span><span class="vuoto">aaaa</span></div>
+    <p class="titolo" id="titolo"></p>
+    <div class="azioni">
+      <button type="button" id="pesca">Pesca un giorno</button>
+      <a class="vai" id="vai" href="#" target="_blank" rel="noopener">guardalo su YouTube</a>
+    </div>
+  </section>
+
+  <section class="blocco">
+    <h2>Gli artisti ritratti</h2>
+    <div class="artisti">
+      <div class="nastro va grande" id="nastroUno"></div>
+      <div class="nastro torna piccola" id="nastroDue"></div>
+    </div>
+  </section>
+ </div>
+</main>
+
+<footer class="piede">
+  <span class="marchio">Ricky Farina © 2026</span>
+  <nav>
+    <span class="social-piede">
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.6" y="5.5" width="18.8" height="13" rx="3.9" ry="3.9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.1 9.2l5.2 2.8-5.2 2.8z" fill="currentColor"/></svg></a>
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="7" r="1.15" fill="currentColor"/></svg></a>
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13.9 8.4h-1.2c-.9 0-1.5.6-1.5 1.5v1.6H9.7v1.9h1.5v4.5h2V13.4h1.6l.3-1.9h-1.9V10c0-.3.1-.4.4-.4h1.3V8.4z" fill="currentColor"/></svg></a>
+    </span>
+    <a href="../privacy/">Privacy</a>
+    <a href="../cookie/">Cookie</a>
+  </nav>
+</footer>
+
+<script src="../js/produzioni.js?v=81" defer></script>
+</body>
+</html>

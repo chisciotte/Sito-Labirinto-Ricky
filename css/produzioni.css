@@ -1,0 +1,136 @@
+/* =========================================================================
+   Chisciotte Produzioni. Usa la stanza dichiarata da body.s-produzioni in
+   base.css: carta avorio, inchiostro scuro, bronzo per cio' che si tocca,
+   e l'oro della home che torna come velo sotto le voci toccate.
+   ========================================================================= */
+
+/* alias comodi: i nomi usati qui sotto puntano ai valori della stanza */
+body.s-produzioni{
+  --fondoStanza:var(--carta);
+  --testo:var(--inchiostro);
+  --ten:color-mix(in srgb,var(--inchiostro) 72%,transparent);
+  --acc:var(--vivo);
+}
+main.stanza{flex:1;width:100%;background:var(--fondoStanza);color:var(--testo)}
+.foglio{max-width:46rem;margin:0 auto;
+  padding:clamp(1.6rem,5vw,3.2rem) clamp(1.2rem,5vw,2rem) clamp(3rem,7vw,5rem)}
+.foglio .ritorno{display:inline-block;color:var(--ten);text-decoration:none;font-size:.82rem;
+  font-style:italic;margin-bottom:clamp(1.8rem,5vw,2.6rem);border-bottom:1px solid transparent}
+.foglio .ritorno:hover,.foglio .ritorno:focus-visible{color:var(--acc);border-bottom-color:var(--acc)}
+
+/* ---- apertura ---- */
+.occhiello{margin:0 0 .8rem;font-size:0.78rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--acc);font-weight:500}
+.apertura-p h1{margin:0;font-weight:500;line-height:1.12;max-width:24ch;
+  font-size:calc(clamp(1.45rem,4vw,2.2rem)*var(--scala))}
+.apertura-p h1 em{font-weight:300;color:var(--ten)}
+.apertura-p .glossa{margin:.8rem 0 0;font-style:italic;color:var(--ten);font-size:.98rem}
+.marchio-casa{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:1.2rem 0 0}
+.dicitura{font-style:italic;color:var(--ten);font-size:.82rem}
+.logo{display:inline-block;margin-top:0;font-size:0.78rem;font-style:italic;color:var(--ten);
+  border:1px dashed var(--riga);padding:.35rem .6rem}
+
+section.blocco{margin-top:clamp(2.8rem,8vw,4.4rem)}
+section.blocco>h2{margin:0;font-weight:500;font-size:calc(clamp(1.15rem,3vw,1.45rem)*var(--scala))}
+section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-size:1rem}
+
+/* ---- menu della casa ---- */
+.menu ol{list-style:none;margin:1.4rem 0 0;padding:0}
+.menu li{border-top:1px solid var(--riga);position:relative}
+.menu li:last-child{border-bottom:1px solid var(--riga)}
+.menu .riga-menu{display:flex;align-items:baseline;gap:.9rem;padding:.85rem 0;
+  text-decoration:none;color:var(--testo);cursor:pointer}
+.menu .n{font-variant-numeric:tabular-nums;font-size:.78rem;color:var(--ten);width:1.8em;flex:none}
+.menu .voce{font-size:calc(clamp(1.05rem,2.6vw,1.26rem)*var(--scala));
+  transition:color .25s ease,transform .25s ease}
+.menu .punti{flex:1;border-bottom:1px dotted var(--riga);transform:translateY(-.3em);min-width:1.2rem}
+.menu .nota{font-style:italic;color:var(--ten);font-size:.85rem;text-align:right;max-width:34ch}
+/* Il velo di luce: la voce toccata si accende come una stanza del labirinto.
+   Solo dove esiste un mouse: sul telefono il browser finge il passaggio del
+   mouse al tocco e poi lo lascia acceso, che e' peggio di non averlo. */
+@media (hover:hover){
+  .menu .riga-menu:hover{background:var(--velo);box-shadow:0 0 0 .55rem var(--velo)}
+  /* il velo scurisce il fondo: la nota a destra, che e' grigia, ci perderebbe
+     leggibilita'. Sulla riga accesa passa all'inchiostro pieno. */
+  .menu .riga-menu:hover .nota,.menu .riga-menu:hover .n{color:var(--inchiostro)}
+}
+.menu .riga-menu:focus-visible{background:var(--velo);box-shadow:0 0 0 .55rem var(--velo)}
+.menu .riga-menu:hover .voce,.menu .riga-menu:focus-visible .voce{
+  color:var(--acc);transform:translateX(.25rem)}
+.menu .riga-menu:hover .n{color:var(--acc)}
+.menu details>summary{list-style:none}
+.menu details>summary::-webkit-details-marker{display:none}
+.menu .segno{flex:none;width:.9em;text-align:center;color:var(--acc);font-size:1rem;transition:transform .3s ease}
+.menu details[open] .segno{transform:rotate(45deg)}
+.menu .sotto-voci{list-style:none;margin:0;padding:0 0 .9rem 2.7em}
+.menu .sotto-voci li{border:0}
+.menu .sotto-voci a{display:flex;align-items:baseline;gap:.8rem;padding:.38rem 0;
+  color:var(--testo);text-decoration:none;font-size:1rem}
+/* dentro una voce aperta il velo non si ripete: basta il colore */
+.menu .sotto-voci a:hover{color:var(--acc);background:none;box-shadow:none}
+.menu .sotto-voci .con{font-style:italic;color:var(--ten);font-size:.78rem}
+.menu .sotto-voci .anno{margin-left:auto;font-size:.78rem;color:var(--ten);font-variant-numeric:tabular-nums}
+/* il marchio di YouTube, monocromatico come chiedono le loro regole */
+.menu .yt{width:1.15em;height:.82em;flex:none;margin-right:.45em;vertical-align:-.04em;display:inline-block}
+.menu .yt .scocca{fill:currentColor}
+.menu .yt .play{fill:var(--fondoStanza)}
+.fuori{margin:.9rem 0 0;font-size:0.78rem;font-style:italic;color:var(--ten)}
+
+/* ---- un giorno a caso ---- */
+.riquadro{border:1px solid var(--riga);border-radius:2px;text-align:center;
+  padding:clamp(1.6rem,4.5vw,2.6rem) clamp(1.2rem,4vw,2rem)}
+.riquadro>h2,.riquadro>.sotto{text-align:center}
+.data{margin:1.5rem auto .5rem;font-weight:300;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;min-height:1.05em;
+  font-size:calc(clamp(2.3rem,8.5vw,4.3rem)*var(--scala))}
+.data .sep{color:var(--acc);font-weight:500;margin:0 .06em}
+.data .vuoto{color:var(--ten);font-style:italic}
+.data.attesa{animation:battito 1.2s ease-in-out infinite}
+@keyframes battito{0%,100%{opacity:.4}50%{opacity:1}}
+.caso .titolo{margin:0;font-style:italic;color:var(--ten);font-size:1.02rem;min-height:1.5em}
+.caso .azioni{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:1.2rem}
+.caso button{background:none;border:1px solid var(--acc);border-radius:2px;color:var(--acc);
+  font-family:inherit;font-size:.95rem;padding:.65rem 1.2rem;cursor:pointer;letter-spacing:.02em;
+  transition:background .2s ease,color .2s ease}
+.caso button:hover,.caso button:focus-visible{background:var(--acc);color:var(--fondoStanza)}
+.caso a.vai{display:none;color:var(--testo);font-size:.92rem;text-decoration:none;border-bottom:1px solid var(--riga)}
+.caso a.vai.su{display:inline;animation:appare .5s ease}
+.caso a.vai:hover{color:var(--acc);border-bottom-color:var(--acc)}
+@keyframes appare{from{opacity:0;transform:translateX(-.4rem)}to{opacity:1;transform:none}}
+.esempio{display:block;margin-top:.9rem;font-size:0.78rem;font-style:italic;color:var(--ten)}
+
+/* ---- gli artisti ritratti: due nastri in senso opposto ---- */
+.artisti{margin-top:1.5rem;overflow:hidden;padding:.9rem 0;
+  border-top:1px solid var(--riga);border-bottom:1px solid var(--riga);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.artisti .nastro{display:flex;width:max-content;align-items:baseline;padding:.35rem 0}
+.artisti .nastro a{padding:0 1.1rem;white-space:nowrap;display:inline-flex;flex-direction:column;
+  align-items:center;text-align:center;line-height:1.15;color:var(--testo);text-decoration:none;
+  transition:color .3s ease}
+.artisti .nastro a:hover{color:var(--acc)}
+.artisti .nastro a .mest{font-size:.62em;font-style:italic;color:var(--ten);letter-spacing:.02em}
+.artisti .p{color:var(--acc);align-self:center}
+.artisti .grande{font-size:calc(clamp(1.1rem,3vw,1.45rem)*var(--scala))}
+.artisti .piccola{font-size:.92rem}
+.artisti .va{animation:va 48s linear infinite}
+.artisti .torna{animation:torna 56s linear infinite}
+.artisti:hover .nastro{animation-play-state:paused}
+@keyframes va{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes torna{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* sul telefono si vedono meno nomi per volta: il nastro va un po' piu' svelto */
+@media (max-width:700px){
+  .artisti .va{animation-duration:34s}
+  .artisti .torna{animation-duration:40s}
+}
+
+@media (max-width:560px){
+  .menu .riga-menu{flex-wrap:wrap}
+  .menu .punti{display:none}
+  .menu .nota{width:100%;text-align:left;margin-left:2.7em;max-width:100%;order:9}
+  .menu .segno{margin-left:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .data.attesa,.artisti .nastro{animation:none}
+}

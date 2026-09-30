@@ -1,0 +1,15 @@
+# Finché il sito sta su github.io, i motori di ricerca devono ignorarlo:
+# altrimenti verrebbe indicizzato a quell'indirizzo e domani si troverebbe
+# in concorrenza con se stesso sul dominio vero.
+User-agent: *
+Disallow: /
+
+# QUANDO COLLEGHIAMO IL DOMINIO, cancella le due righe qui sopra
+# (User-agent e Disallow) e togli il cancelletto da queste:
+#
+# User-agent: *
+# Allow: /
+# Disallow: /privacy/
+# Disallow: /cookie/
+#
+# Sitemap: https://rickyfarina.it/sitemap.xml

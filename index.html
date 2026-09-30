@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ricky Farina – filmmaker e aforista</title>
+<meta name="description" content="Il sito di Ricky Farina, filmmaker e aforista milanese: videoritratti, cortometraggi, aforismi e poesie.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D1520">
+<!-- <link rel="canonical" href="https://rickyfarina.it/..."> da riattivare col dominio -->
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="font/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/base.css?v=81">
+<link rel="stylesheet" href="css/labirinto.css?v=81">
+</head>
+<body>
+
+<header class="testata">
+  <div class="sinistra">
+    <span class="firma">Ricky Farina</span>
+    <span class="mestiere">filmmaker e aforista</span>
+  </div>
+  <div class="regolazioni">
+    <button class="regola" id="audio" type="button" aria-pressed="true" aria-label="Suono acceso">
+      <span class="voce">suono</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/>
+        <g class="onde"><path d="M15.5 9.8a3.4 3.4 0 0 1 0 4.4"/><path d="M18 7.6a6.6 6.6 0 0 1 0 8.8"/></g>
+        <g class="barra"><line x1="16" y1="9.6" x2="21" y2="14.4"/><line x1="21" y1="9.6" x2="16" y2="14.4"/></g>
+      </svg>
+      <span class="stato">on</span>
+    </button>
+    <button class="regola segui" id="segui" type="button" aria-pressed="true" aria-label="Chisciotte segue il mouse">
+      <span class="voce">movimento</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 3.5 L6 17 L9.6 13.6 L12.2 19.2 L14.4 18.2 L11.8 12.7 L16.8 12.7 Z"/>
+        <g class="barra"><line x1="3.5" y1="20.5" x2="20.5" y2="3.5"/></g>
+      </svg>
+      <span class="stato">mouse e click</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="campo" id="campo">
+    <svg class="tavola" id="maze" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="Un labirinto. Conduci Don Chisciotte fino alla stanza che vuoi aprire, oppure clicca direttamente il suo nome.">
+      <defs>
+        <filter id="tremore" x="-6%" y="-6%" width="112%" height="112%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="7" result="r"/>
+          <feDisplacementMap in="SourceGraphic" in2="r" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+      <g id="muri" filter="url(#tremore)"></g>
+      <g id="oggetti"></g>
+      <path id="tracciaScia"></path>
+      <g id="cavaliere">
+        <g id="corpoCav">
+          <ellipse cx="0" cy="-7" rx="15" ry="9"/>
+          <path d="M 8,-11 C 12,-16 14,-24 20,-28 L 30.5,-30.5 C 34,-31 34,-23.5 30.5,-22.5 L 22,-20.5 C 18,-15.5 14,-11.5 10,-8.5 Z"/>
+          <path d="M 20.5,-28.5 L 21,-35 L 26,-29 Z"/>
+          <path d="M -15,-8 C -23,-11 -27.5,-2 -24.5,7.5 L -19.5,5.5 C -21.5,-2 -18.5,-6 -14,-5 Z"/>
+          <g id="z1"><path d="M -11,-1 L -6,-1 L -7.5,13 L -12,13 Z"/></g>
+          <g id="z2"><path d="M -4.5,0 L 0,0 L -0.6,13 L -4.8,13 Z"/></g>
+          <g id="z3"><path d="M 4.5,0 L 9,0 L 8.4,13 L 4.2,13 Z"/></g>
+          <g id="z4"><path d="M 10,-2 L 14.5,-2 L 15,12 L 10.8,12 Z"/></g>
+          <path d="M -5,-11 L 5,-12 L 3.2,-23.5 L -3.2,-23.5 Z"/>
+          <circle cx="0.8" cy="-27.5" r="5.3"/>
+          <path d="M -8.4,-29.5 C -7.4,-36 9.6,-36 10.6,-29.5 Z"/>
+          <g id="lancia">
+            <path d="M 0.7,-21.2 L -9.6,-28.6 L -12,-25.4 L -1.2,-17.9 Z"/>
+            <path d="M -8.2,-7.4 L -6.6,-8.3 L -17.8,-45.6 L -20.2,-44.7 Z"/>
+            <path d="M -18.1,-44.9 L -20.6,-57 L -24.2,-43.6 Z"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+
+    <div class="centro" id="centro">
+      <svg class="mulino" viewBox="0 0 100 124" aria-hidden="true">
+        <path class="fermo" d="M 36,120 L 44,46 L 56,46 L 64,120"/>
+        <path class="fermo" d="M 40,88 L 60,88"/>
+        <path class="fermo" d="M 44,46 L 50,33 L 56,46"/>
+        <g class="pale">
+          <path d="M 48,37 L 48,4 L 60,4 L 60,37"/>
+          <path d="M 53,42 L 86,42 L 86,54 L 53,54"/>
+          <path d="M 52,45 L 52,78 L 40,78 L 40,45"/>
+          <path d="M 47,40 L 14,40 L 14,28 L 47,28"/>
+        </g>
+        <circle class="fermo" cx="50" cy="40" r="3.4"/>
+      </svg>
+    </div>
+    <div class="alone" id="alone" aria-hidden="true"></div>
+    <div class="cieco" id="cieco">
+      <p class="testo" id="testo"></p>
+    </div>
+
+    <a class="stanza" data-stanza="produzione" href="produzioni/">
+      <span class="invito">entra</span>
+      <span class="nome">Chisciotte<br>Produzioni</span>
+      <span class="glossa">videoritratti, film casalinghi e di quartiere</span>
+    </a>
+    <a class="stanza" data-stanza="collaborazioni" href="a-piu-mani/">
+      <span class="invito">entra</span>
+      <span class="nome">A più mani</span>
+      <span class="glossa">film nati insieme ad amici, giornalisti e compagni d'ozio</span>
+    </a>
+    <a class="stanza" data-stanza="aforismi" href="aforismi/">
+      <span class="invito">entra</span>
+      <span class="nome">Aforismi e Poesie</span>
+      <span class="glossa">il blog, e due raccolte firmate Zigro</span>
+    </a>
+    <a class="stanza" data-stanza="articoli" href="articoli/">
+      <span class="invito">entra</span>
+      <span class="nome">Articoli</span>
+      <span class="glossa">quello che scrivo sui giornali</span>
+    </a>
+    <a class="stanza" data-stanza="chisono" href="chi-sono/">
+      <span class="invito">entra</span>
+      <span class="nome">Chi sono?</span>
+      <span class="glossa">e dove sono?</span>
+    </a>
+  </div>
+</main>
+
+
+<footer class="piede">
+  <span class="marchio">Ricky Farina © 2026</span>
+  <nav>
+    <span class="social-piede">
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.6" y="5.5" width="18.8" height="13" rx="3.9" ry="3.9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.1 9.2l5.2 2.8-5.2 2.8z" fill="currentColor"/></svg></a>
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="7" r="1.15" fill="currentColor"/></svg></a>
+      <a class="segno-piede" href="#" target="_blank" rel="noopener me" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13.9 8.4h-1.2c-.9 0-1.5.6-1.5 1.5v1.6H9.7v1.9h1.5v4.5h2V13.4h1.6l.3-1.9h-1.9V10c0-.3.1-.4.4-.4h1.3V8.4z" fill="currentColor"/></svg></a>
+    </span>
+    <a href="privacy/">Privacy</a>
+    <a href="cookie/">Cookie</a>
+  </nav>
+</footer>
+
+<script src="js/labirinto.js?v=81" defer></script>
+</body>
+</html>
