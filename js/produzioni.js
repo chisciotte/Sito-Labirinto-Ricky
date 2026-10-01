@@ -87,7 +87,10 @@
           }
           if(film.length<=1){
             elT.textContent=film[0]?film[0].titolo:'';
-            if(film[0]&&film[0].url){elV.href=film[0].url;elV.classList.add('su');}
+            /* il pulsante si vede comunque: con i segnaposto l'indirizzo non
+               c'e' ancora, e nasconderlo farebbe sembrare il gioco rotto */
+            elV.href=(film[0]&&film[0].url)||'#';
+            elV.classList.add('su');
           }else{
             /* piu' film nello stesso giorno: si elencano numerati, cosi' si
                capisce che sono tutti di quel giorno */
