@@ -134,3 +134,30 @@ section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-s
 @media (prefers-reduced-motion:reduce){
   .data.attesa,.artisti .nastro{animation:none}
 }
+
+/* quando in un giorno ci sono piu' film, si elencano tutti numerati:
+   cosi' si capisce che appartengono allo stesso giorno */
+.film-del-giorno{list-style:none;margin:.6rem 0 0;padding:0;display:flex;
+  flex-direction:column;gap:.45rem;align-items:center}
+.film-del-giorno li{display:flex;gap:.55rem;align-items:baseline;max-width:44ch}
+.film-del-giorno .n{font-size:.78rem;color:var(--acc);font-variant-numeric:tabular-nums;flex:none}
+.film-del-giorno a{color:var(--testo);text-decoration:none;font-size:.98rem;line-height:1.45;
+  border-bottom:1px solid transparent;transition:color .25s ease,border-color .25s ease}
+.film-del-giorno a:hover{color:var(--acc);border-bottom-color:color-mix(in srgb,var(--acc) 40%,transparent)}
+
+/* le sottovoci hanno la loro glossa, come le voci madri ma piu' sommessa */
+.menu .sotto-voci a{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.menu .sotto-voci .titolo-corto{flex:none}
+.menu .sotto-voci .glossa-corta{font-style:italic;font-size:.82rem;
+  color:color-mix(in srgb,var(--inchiostro) 62%,transparent)}
+/* un trattino stacca la glossa dal titolo della sottovoce */
+.menu .sotto-voci .glossa-corta::before{content:"\2013";margin-right:.45em;
+  font-style:normal;opacity:.55}
+/* Le cinque stelle restano del colore del testo e si accendono solo al
+   passaggio del mouse: un vanto che si scopre, non che si annuncia. */
+.menu .stelle{letter-spacing:.08em;font-size:.82em;
+  color:color-mix(in srgb,var(--inchiostro) 55%,transparent);
+  transition:color .3s ease}
+@media (hover:hover){
+  .menu .riga-menu:hover .stelle{color:var(--acc)}
+}
