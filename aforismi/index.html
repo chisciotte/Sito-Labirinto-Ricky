@@ -10,9 +10,9 @@
 <!-- <link rel="canonical" href="https://rickyfarina.it/aforismi/"> da riattivare col dominio -->
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../font/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/base.css?v=91">
-<link rel="stylesheet" href="../css/sezione.css?v=91">
-<link rel="stylesheet" href="../css/aforismi.css?v=91">
+<link rel="stylesheet" href="../css/base.css?v=93">
+<link rel="stylesheet" href="../css/sezione.css?v=93">
+<link rel="stylesheet" href="../css/aforismi.css?v=93">
 </head>
 <body class="s-aforismi">
 
@@ -152,19 +152,28 @@
   <details class="gruppo">
     <summary>
       <h2>Poesie</h2>
-      <span class="quanti">le cinque più recenti dal blog</span>
+      <span class="quanti">una alla volta, dalla più recente</span>
       <span class="segno" aria-hidden="true">+</span>
     </summary>
     <div class="dentro">
-      <ul class="poesie">
-        <li><div class="titolo">[titolo della poesia]</div><p class="incipit">[i primi due versi, presi dal blog]</p><span class="quando">4 settembre 2026 · <a href="#" target="_blank" rel="noopener">leggila intera</a></span></li>
-        <li><div class="titolo">[titolo della poesia]</div><p class="incipit">[i primi due versi]</p><span class="quando">21 agosto 2026 · <a href="#" target="_blank" rel="noopener">leggila intera</a></span></li>
-        <li><div class="titolo">[titolo della poesia]</div><p class="incipit">[i primi due versi]</p><span class="quando">2 agosto 2026 · <a href="#" target="_blank" rel="noopener">leggila intera</a></span></li>
-        <li><div class="titolo">[titolo della poesia]</div><p class="incipit">[i primi due versi]</p><span class="quando">15 luglio 2026 · <a href="#" target="_blank" rel="noopener">leggila intera</a></span></li>
-        <li><div class="titolo">[titolo della poesia]</div><p class="incipit">[i primi due versi]</p><span class="quando">1 luglio 2026 · <a href="#" target="_blank" rel="noopener">leggila intera</a></span></li>
+      <!-- POESIE:INIZIO -->
+      <ul class="poesie uno-per-volta" id="lePoesie">
+          <li><div class="titolo">[titolo della poesia 1]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">4 settembre 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 2]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">26 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 3]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">22 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 4]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">18 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 5]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">14 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 6]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">10 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 7]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">6 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
+          <li><div class="titolo">[titolo della poesia 8]</div><p class="versi">[il testo della poesia, per intero,<br>con i suoi a capo<br>e i suoi silenzi]</p><span class="quando">2 agosto 2026 &middot; <a href="#" target="_blank" rel="noopener">sul blog</a></span></li>
       </ul>
+      <!-- POESIE:FINE -->
+      <div class="sfogliatore">
+        <button type="button" class="verso" id="indietroPo" aria-label="Poesia precedente">&#8592;</button>
+        <span class="posto" id="postoPo"></span>
+        <button type="button" class="verso" id="avantiPo" aria-label="Poesia successiva">&#8594;</button>
+      </div>
 
-      <p class="tutti"><a href="#" target="_blank" rel="noopener">tutte le poesie sul blog</a></p>
     </div>
   </details>
 
@@ -263,6 +272,6 @@
     <button type="button" id="chiudi">chiudi</button>
   </div>
 </div>
-<script src="../js/aforismi.js?v=91" defer></script>
+<script src="../js/aforismi.js?v=93" defer></script>
 </body>
 </html>

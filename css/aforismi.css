@@ -82,15 +82,26 @@ main.stanza{flex:1;width:100%;max-width:52rem;margin:0 auto;background:var(--fon
 /* Gli aforismi dal blog si leggono uno alla volta: al centro ce n'e' sempre
    e solo uno, e le frecce lo sostituiscono. Un aforisma ha bisogno di stare
    da solo per fare il suo effetto; in fila con altri cento si annulla. */
+.poesie.uno-per-volta,
 .detti.uno-per-volta{border-top:1px solid var(--riga);border-bottom:1px solid var(--riga);
   min-height:8.5rem;display:flex;align-items:center;justify-content:center;
   padding:1.6rem 0;text-align:center}
+.poesie.uno-per-volta li,
 .detti.uno-per-volta li{display:none;border:0;padding:0;width:100%}
+.poesie.uno-per-volta li::before,
 .detti.uno-per-volta li::before{display:none}
+.poesie.uno-per-volta li.in-vista,
 .detti.uno-per-volta li.in-vista{display:block;animation:entraAforisma .5s ease}
 @keyframes entraAforisma{from{opacity:0;transform:translateY(.5rem)}to{opacity:1;transform:none}}
 .detti.uno-per-volta p{font-size:calc(clamp(1.1rem,3vw,1.35rem)*var(--scala));line-height:1.5;
   max-width:36ch;margin:0 auto}
+/* la poesia ha un titolo sopra e i suoi a capo: il blocco resta centrato
+   nella pagina ma i versi si allineano a sinistra, come su carta */
+.poesie.uno-per-volta{min-height:11rem}
+.poesie.uno-per-volta .titolo{font-size:calc(1.08rem*var(--scala));margin-bottom:.7rem}
+.poesie.uno-per-volta .versi{display:inline-block;text-align:left;margin:0;
+  font-size:calc(clamp(1rem,2.6vw,1.14rem)*var(--scala));line-height:1.75;max-width:40ch}
+.poesie.uno-per-volta .quando,
 .detti.uno-per-volta .quando{margin-top:.8rem}
 
 .sfogliatore{display:flex;align-items:center;justify-content:center;gap:1.4rem;margin:1rem 0 0}

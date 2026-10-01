@@ -190,39 +190,51 @@
 })();
 
 /* =========================================================================
-   Gli aforismi dal blog, uno alla volta.
+   Un lettore solo per due sezioni: gli aforismi dal blog e le poesie.
 
-   I primi cinquanta sono gia' scritti nella pagina: si vedono subito e i
-   motori di ricerca li trovano. Gli altri stanno in aforismi/altri.json,
-   sullo stesso sito, e si scaricano solo quando si arriva in fondo ai primi.
+   In pagina ci sono le prime voci, scritte nel codice: si vedono subito e i
+   motori di ricerca le trovano. Le altre stanno in un file a parte, sullo
+   stesso sito, e si scaricano soltanto quando si arriva in fondo alle prime.
    ========================================================================= */
 (function(){
   "use strict";
-  var elenco = document.getElementById('dalBlog'),
-      avanti = document.getElementById('avantiAf'),
-      indietro = document.getElementById('indietroAf'),
-      posto = document.getElementById('postoAf');
-  if(!elenco || !avanti || !indietro) return;
 
-  var voci = Array.prototype.slice.call(elenco.children),
-      qui = 0, totale = voci.length, resto = null, sto_caricando = false;
+  function lettore(opzioni){
+    var elenco = document.getElementById(opzioni.elenco),
+        avanti = document.getElementById(opzioni.avanti),
+        indietro = document.getElementById(opzioni.indietro),
+        posto = document.getElementById(opzioni.posto);
+    if(!elenco || !avanti || !indietro) return;
 
-  function mostra(n){
-    if(n < 0 || n >= voci.length) return;
-    voci[qui].classList.remove('in-vista');
-    qui = n;
-    voci[qui].classList.add('in-vista');
-    if(posto) posto.textContent = (qui + 1) + ' di ' + totale;
-    indietro.disabled = (qui === 0);
-    avanti.disabled = (qui >= totale - 1);
-  }
+    var voci = Array.prototype.slice.call(elenco.children),
+        qui = 0, totale = voci.length, resto = null, sto_caricando = false;
 
-  function aggiungi(nuove){
-    var pezzo = document.createDocumentFragment();
-    nuove.forEach(function(v){
+    function mostra(n){
+      if(n < 0 || n >= voci.length) return;
+      voci[qui].classList.remove('in-vista');
+      qui = n;
+      voci[qui].classList.add('in-vista');
+      if(posto) posto.textContent = (qui + 1) + ' di ' + totale;
+      indietro.disabled = (qui === 0);
+      avanti.disabled = (qui >= totale - 1);
+    }
+
+    function riga(v){
       var li = document.createElement('li');
+      if(v.titolo){
+        var h = document.createElement('div');
+        h.className = 'titolo'; h.textContent = v.titolo;
+        li.appendChild(h);
+      }
       var p = document.createElement('p');
-      p.textContent = v.testo;
+      p.className = opzioni.classeTesto || '';
+      /* gli a capo della poesia vanno rispettati: li ricostruisco a mano
+         invece di affidarli al testo, che li appiattirebbe */
+      (v.testo || v.titolo || '').split('\n').forEach(function(r, k){
+        if(k) p.appendChild(document.createElement('br'));
+        p.appendChild(document.createTextNode(r));
+      });
+      li.appendChild(p);
       var q = document.createElement('span');
       q.className = 'quando';
       q.appendChild(document.createTextNode(v.quando + ' \u00b7 '));
@@ -230,49 +242,57 @@
       a.href = v.url; a.target = '_blank'; a.rel = 'noopener';
       a.textContent = 'sul blog';
       q.appendChild(a);
-      li.appendChild(p); li.appendChild(q);
-      pezzo.appendChild(li);
-      voci.push(li);
+      li.appendChild(q);
+      return li;
+    }
+
+    function aggiungi(nuove){
+      var pezzo = document.createDocumentFragment();
+      nuove.forEach(function(v){ var li = riga(v); pezzo.appendChild(li); voci.push(li); });
+      elenco.appendChild(pezzo);
+    }
+
+    function vaiAvanti(){
+      if(qui + 1 < voci.length){ mostra(qui + 1); return; }
+      if(resto || sto_caricando) return;
+      sto_caricando = true;
+      avanti.disabled = true;
+      fetch(opzioni.file)
+        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function(dati){
+          resto = dati.resto || [];
+          totale = dati.totale || (voci.length + resto.length);
+          aggiungi(resto);
+          sto_caricando = false;
+          mostra(qui + 1);
+        })
+        .catch(function(){
+          sto_caricando = false;
+          totale = voci.length;          /* piu' di cosi' non ce n'e' */
+          mostra(qui);
+        });
+    }
+
+    avanti.addEventListener('click', vaiAvanti);
+    indietro.addEventListener('click', function(){ mostra(qui - 1); });
+    document.addEventListener('keydown', function(e){
+      var cassetto = elenco.closest('details');
+      if(!cassetto || !cassetto.open) return;
+      if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      if(e.key === 'ArrowRight') vaiAvanti();
+      if(e.key === 'ArrowLeft') mostra(qui - 1);
     });
-    elenco.appendChild(pezzo);
+
+    /* il totale vero arriva col file: lo chiedo subito, senza mostrare nulla */
+    fetch(opzioni.file).then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(dati){ if(dati && dati.totale){ totale = dati.totale; mostra(qui); } })
+      .catch(function(){});
+
+    mostra(0);
   }
 
-  function vaiAvanti(){
-    if(qui + 1 < voci.length){ mostra(qui + 1); return; }
-    if(resto || sto_caricando) return;
-    sto_caricando = true;
-    avanti.disabled = true;
-    fetch('altri.json')
-      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(dati){
-        resto = dati.resto || [];
-        totale = dati.totale || (voci.length + resto.length);
-        aggiungi(resto);
-        sto_caricando = false;
-        mostra(qui + 1);
-      })
-      .catch(function(){
-        sto_caricando = false;
-        totale = voci.length;          /* piu' di cosi' non ce n'e' */
-        mostra(qui);
-      });
-  }
-
-  avanti.addEventListener('click', vaiAvanti);
-  indietro.addEventListener('click', function(){ mostra(qui - 1); });
-  elenco.addEventListener('keydown', function(){});
-  document.addEventListener('keydown', function(e){
-    if(!elenco.closest('details[open]')) return;
-    if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
-    if(e.key === 'ArrowRight') vaiAvanti();
-    if(e.key === 'ArrowLeft') mostra(qui - 1);
-  });
-
-  /* il totale vero si sapra' col file: finche' non serve, diciamo quanti
-     ce ne sono qui senza promettere numeri che non conosciamo */
-  fetch('altri.json').then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(dati){ if(dati && dati.totale){ totale = dati.totale; mostra(qui); } })
-    .catch(function(){});
-
-  mostra(0);
+  lettore({elenco:'dalBlog',  avanti:'avantiAf', indietro:'indietroAf',
+           posto:'postoAf',   file:'altri.json'});
+  lettore({elenco:'lePoesie', avanti:'avantiPo', indietro:'indietroPo',
+           posto:'postoPo',   file:'poesie.json', classeTesto:'versi'});
 })();
