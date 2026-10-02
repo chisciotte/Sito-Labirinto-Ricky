@@ -1,0 +1,26 @@
+# File che i sistemi operativi e gli editor lasciano in giro, e che non
+# devono finire nel sito pubblicato.
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+# ATTENZIONE: .gitignore non nasconde niente. Serve solo a NON caricare
+# certi file. Tutto quello che carichi in un repository pubblico e' visibile
+# a chiunque, e comunque un sito statico manda al browser ogni suo file.
+# Quindi qui dentro non deve mai finire nulla di riservato: niente chiavi,
+# niente password, niente materiale non ancora pubblico.
+
+# scarti che Python lascia dietro di se' quando esegue la raccolta
+__pycache__/
+*.pyc
+
+# gli appunti di lavoro restano sul computer, non nella repository:
+# su GitHub Pages qualunque file della repository e' raggiungibile via web
+README.md
+README-di-lavoro.md
+appunti/
