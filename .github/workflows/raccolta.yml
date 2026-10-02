@@ -1,0 +1,53 @@
+# Ogni notte il sito va a prendersi le novita' da solo.
+# Nessuno deve lanciare niente: gira su GitHub, non sul computer di nessuno.
+name: Raccolta notturna
+
+on:
+  schedule:
+    - cron: '17 3 * * *'      # ogni notte alle 3:17 UTC (le 4:17 o 5:17 in Italia)
+  workflow_dispatch:          # e in qualsiasi momento, dal bottone su GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  raccogli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Articoli dal Fatto Quotidiano
+        run: python3 raccolta/fatto.py
+
+      - name: I video del canale, per il giorno a caso
+        run: python3 raccolta/canale.py
+        env:
+          YT_CHIAVE: ${{ secrets.YT_CHIAVE }}
+
+      # Le altre fonti si aggiungono qui, una riga ciascuna, quando saranno pronte:
+      # - name: Aforismi e poesie dal blog
+      #   run: python3 raccolta/blog.py
+      # - name: I nove inediti dal foglio di Ricky
+      #   run: python3 raccolta/inediti.py
+      #   env:
+      #     FOGLIO: ${{ secrets.FOGLIO_INEDITI }}
+
+      - name: Salva le novita'
+        run: |
+          git config user.name  "raccolta automatica"
+          git config user.email "raccolta@rickyfarina.it"
+          git add -A
+          git diff --staged --quiet && echo "niente di nuovo" && exit 0
+          git commit -m "raccolta del $(date +%d/%m/%Y)"
+          # La raccolta dura minuti: nel frattempo qualcuno puo' aver
+          # modificato il sito. Prima di salvare si riallinea, poi riprova.
+          for tentativo in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            echo "tentativo $tentativo non riuscito, riprovo"
+            sleep 5
+          done
+          echo "non sono riuscito a salvare"; exit 1
