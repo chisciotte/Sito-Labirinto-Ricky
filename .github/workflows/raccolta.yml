@@ -23,12 +23,13 @@ jobs:
       - name: Articoli dal Fatto Quotidiano
         run: python3 raccolta/fatto.py
 
-      - name: I video del canale, per il giorno a caso
-        run: python3 raccolta/canale.py
-        env:
-          YT_CHIAVE: ${{ secrets.YT_CHIAVE }}
-
-      # Le altre fonti si aggiungono qui, una riga ciascuna, quando saranno pronte:
+      # Le altre fonti si aggiungono qui, una riga ciascuna, quando saranno
+      # pronte. Si aggiunge la tappa INSIEME al programma, mai prima: un giro
+      # che cerca un file inesistente si ferma e non arriva a salvare.
+      # - name: I video del canale, per il giorno a caso
+      #   run: python3 raccolta/canale.py
+      #   env:
+      #     YT_CHIAVE: ${{ secrets.YT_CHIAVE }}
       # - name: Aforismi e poesie dal blog
       #   run: python3 raccolta/blog.py
       # - name: I nove inediti dal foglio di Ricky
