@@ -65,9 +65,22 @@
       elV=document.getElementById('vai'),
       bottone=document.getElementById('pesca');
 
+  /* La riga si accende tutta al passaggio del mouse, come le altre voci del
+     menu: allora deve anche rispondere tutta. Il clic sulla riga lo inoltra al
+     bottone, che resta l'unico elemento davvero premibile - per la tastiera e
+     per chi usa un lettore di schermo non cambia niente. */
+  var rigaCaso = bottone && bottone.closest('.riga-menu');
+  if(rigaCaso){
+    rigaCaso.addEventListener('click', function(e){
+      if(e.target.closest('.pesca')) return;   /* il bottone ci pensa da se' */
+      bottone.click();
+    });
+  }
+
   if(bottone&&elD){
     bottone.addEventListener('click',function(){
       if(!GIORNI.length)return;
+      bottone.textContent='pesca ancora';
       elD.classList.remove('attesa');
       elV.classList.remove('su');
       elT.textContent='';
@@ -134,4 +147,93 @@
     uno.innerHTML=nastro(ARTISTI.slice(0,meta));
     due.innerHTML=nastro(ARTISTI.slice(meta).concat(ARTISTI.slice(0,1)));
   }
+})();
+
+/* =========================================================================
+   Il libro del menu: tre pagine che si voltano.
+   Il foglio ruota sul suo lato sinistro e scopre quello sotto. Il riquadro
+   prende ogni volta l'altezza della pagina aperta, cosi' nessuna pagina
+   resta tagliata e non compaiono barre di scorrimento dentro il libro.
+   Se questo programma non parte, la sezione resta senza la classe "acceso"
+   e i tre fogli si leggono uno sotto l'altro: il menu c'e' lo stesso.
+   ========================================================================= */
+(function(){
+  "use strict";
+  var libro=document.getElementById('libro');
+  if(!libro) return;
+  var cornice=libro.querySelector('.cornice');
+  var comandi=libro.querySelector('.comandi');
+  var fogli=[].slice.call(libro.querySelectorAll('.foglio-pag'));
+  if(!cornice||!comandi||fogli.length<2) return;
+
+  var avanti=comandi.querySelector('.avanti');
+  var indietro=comandi.querySelector('.indietro');
+  var pallini=[].slice.call(comandi.querySelectorAll('.pallino'));
+  var qui=0;
+
+  libro.classList.add('acceso');
+  comandi.hidden=false;
+
+  /* l'altezza vera della pagina aperta: si misura il contenuto, non il
+     riquadro, perche' il riquadro e' proprio quello che stiamo decidendo */
+  function misura(){
+    var dentro=fogli[qui].firstElementChild;
+    /* offsetHeight, non getBoundingClientRect: il secondo misura l'ingombro
+       DOPO le trasformazioni, e tornando indietro la pagina e' ancora girata
+       di centosessantotto gradi per una frazione di istante. La prospettiva la
+       faceva sembrare piu' alta del vero, e il riquadro restava largo. */
+    if(dentro) cornice.style.height=dentro.offsetHeight+'px';
+  }
+
+  /* Girando dal fondo della pagina lunga, la pagina nuova comincia sopra la
+     testa del lettore. Si riporta il libro in cima, ma SOLO se il suo bordo
+     alto e' uscito dallo schermo: se e' gia' visibile, spostare la pagina
+     sotto le dita di chi legge e' peggio che lasciarla ferma. */
+  function inCima(){
+    if(libro.getBoundingClientRect().top >= 0) return;
+    var dolce = !(window.matchMedia &&
+                  matchMedia('(prefers-reduced-motion: reduce)').matches);
+    libro.scrollIntoView({block:'start', behavior: dolce ? 'smooth' : 'auto'});
+  }
+
+  function metti(primo){
+    fogli.forEach(function(f,k){
+      f.classList.toggle('voltata', k<qui);
+      f.style.zIndex=fogli.length-k;
+      /* le pagine non aperte non devono rispondere al mouse ne' alla
+         tastiera: altrimenti si va a finire su una voce che non si vede */
+      f.style.pointerEvents=(k===qui)?'auto':'none';
+      f.setAttribute('aria-hidden', k===qui?'false':'true');
+    });
+    pallini.forEach(function(p,k){ p.setAttribute('aria-current', k===qui?'true':'false'); });
+    indietro.disabled = qui<=0;
+    avanti.disabled   = qui>=fogli.length-1;
+    misura();
+    if(!primo) inCima();
+  }
+
+  function vaiA(n){
+    n=Math.max(0, Math.min(fogli.length-1, n));
+    if(n!==qui){ qui=n; metti(); }
+  }
+  avanti.addEventListener('click', function(){ vaiA(qui+1); });
+  indietro.addEventListener('click', function(){ vaiA(qui-1); });
+  pallini.forEach(function(p){
+    p.addEventListener('click', function(){ vaiA(parseInt(p.dataset.va,10)||0); });
+  });
+
+  /* La pagina aperta cambia altezza da sola: una voce che si apre, il rullo
+     della data, il titolo del film che compare. Invece di stare a sentire ogni
+     singolo caso, si guarda la pagina e si rimisura quando cambia. */
+  if(window.ResizeObserver){
+    var occhio=new ResizeObserver(function(){ misura(); });
+    fogli.forEach(function(f){ if(f.firstElementChild) occhio.observe(f.firstElementChild); });
+  }else{
+    libro.addEventListener('toggle', function(){ setTimeout(misura,0); }, true);
+  }
+  addEventListener('resize', misura);
+  /* i caratteri arrivano dopo il primo disegno e cambiano le altezze */
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(misura);
+
+  metti(true);   /* al caricamento non si sposta niente */
 })();

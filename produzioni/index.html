@@ -10,9 +10,9 @@
 <!-- <link rel="canonical" href="https://rickyfarina.it/produzioni/"> da riattivare col dominio -->
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../font/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/base.css?v=97">
-<link rel="stylesheet" href="../css/sezione.css?v=97">
-<link rel="stylesheet" href="../css/produzioni.css?v=99">
+<link rel="stylesheet" href="../css/base.css?v=107">
+<link rel="stylesheet" href="../css/sezione.css?v=107">
+<link rel="stylesheet" href="../css/produzioni.css?v=108">
 </head>
 <body class="s-produzioni">
 
@@ -31,18 +31,31 @@
     <p class="occhiello">Chisciotte Produzioni</p>
     <h1>Il più grande regista casalingo <em>(e di quartiere)</em> del mondo</h1>
     <p class="glossa">videoritratti, film casalinghi e di quartiere</p>
-    <p class="marchio-casa">
-      <span class="marchio">
-        <img class="logo" src="../img/logo-chisciotte.png" width="96" height="96"
-             alt="Il marchio di Chisciotte Produzioni: il volto di Don Chisciotte dentro un medaglione tondo">
-        <img class="scritta" src="../img/chisciotte-scritta.png" width="154" height="35" alt="Chisciotte">
-      </span>
-      <span class="dicitura">casa di produzione immaginaria</span>
-    </p>
   </div>
 
-  <section class="blocco menu">
-    <h2>Menu della casa</h2>
+  <section class="blocco menu libro" id="libro">
+    <!-- Tre pagine che si voltano. Senza JavaScript restano una sotto l'altra,
+         nell'ordine in cui stanno scritte: il menu si legge lo stesso. E' il
+         programma ad aggiungere la classe "acceso" e a far girare i fogli. -->
+    <div class="cornice">
+
+      <div class="foglio-pag">
+        <div class="pagina copertina">
+          <div class="mezzo">
+            <img class="logo" src="../img/logo-chisciotte.png" width="112" height="112"
+                 alt="Il marchio di Chisciotte Produzioni: il volto di Don Chisciotte dentro un medaglione tondo">
+            <img class="scritta" src="../img/chisciotte-scritta.png" width="180" height="41" alt="Chisciotte">
+            <p class="dicitura">casa di produzione immaginaria</p>
+            <h2 class="invito">Menu della casa</h2>
+            <p class="sfoglia">sfoglia</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="foglio-pag">
+        <div class="pagina">
+          <h3 class="capo-menu">All you can see</h3>
+          <p class="cappello">tutto quello che c'è, a ingresso libero</p>
     <ol>
       <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">01</span><span class="voce">I dieci imperdibili</span><span class="punti"></span><span class="nota">per chi non sa cosa scegliere</span></a></li>
 
@@ -59,13 +72,7 @@
         </ul>
       </details></li>
 
-      <li><details>
-        <summary class="riga-menu"><span class="n">05</span><span class="voce">I dialoghi di Ricky</span><span class="punti"></span><span class="nota">podcast ante litteram</span><span class="segno" aria-hidden="true">+</span></summary>
-        <ul class="sotto-voci">
-          <li><a href="#" target="_blank" rel="noopener"><span class="titolo-corto">I dialoghi con Marietto</span><span class="glossa-corta">Don Chisciotte e Sancio Panza</span></a></li>
-          <li><a href="#" target="_blank" rel="noopener"><span class="titolo-corto">Altri dialoghi</span><span class="glossa-corta">senza pudore</span></a></li>
-        </ul>
-      </details></li>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">05</span><span class="voce">I dialoghi di Ricky</span><span class="punti"></span><span class="nota">podcast ante litteram</span></a></li>
 
       <li><details>
         <summary class="riga-menu"><span class="n">06</span><span class="voce">Chisciotte a zonzo</span><span class="punti"></span><span class="nota">nœuva ondada sul marciapée</span><span class="segno" aria-hidden="true">+</span></summary>
@@ -79,7 +86,7 @@
 
       <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">08</span><span class="voce">Il favoloso mondo di Roby Rosi</span><span class="punti"></span><span class="nota">un cuore spumeggiante</span></a></li>
 
-      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">09</span><span class="voce">Matrimoni</span><span class="punti"></span><span class="nota">un Ricky è per sempre</span></a></li>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">09</span><span class="voce">Matrimoni d’essai</span><span class="punti"></span><span class="nota">un Ricky è per sempre</span></a></li>
 
       <li><details>
         <summary class="riga-menu"><span class="n">10</span><span class="voce">Lungometraggi</span><span class="punti"></span><span class="nota"><span class="stelle">★★★★★</span> kolossal destinati al flop</span><span class="segno" aria-hidden="true">+</span></summary>
@@ -100,17 +107,63 @@
 
       <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">12</span><span class="voce"><svg class="yt" viewBox="0 0 28 20" aria-hidden="true"><path class="scocca" d="M25.9 3.1c-.3-1.1-1.2-2-2.3-2.3C21.6.25 14 .25 14 .25s-7.6 0-9.6.55C3.3 1.1 2.4 2 2.1 3.1 1.55 5.1 1.55 10 1.55 10s0 4.9.55 6.9c.3 1.1 1.2 2 2.3 2.3 2 .55 9.6.55 9.6.55s7.6 0 9.6-.55c1.1-.3 2-1.2 2.3-2.3.55-2 .55-6.9.55-6.9s0-4.9-.55-6.9z"/><path class="play" d="M11.2 14.3L18.5 10l-7.3-4.3z"/></svg>Iscriviti al canale</span><span class="punti"></span><span class="nota">per non perdere il prossimo film</span></a></li>
     </ol>
-  </section>
+        </div>
+      </div>
 
-  <section class="blocco caso riquadro">
-    <h2>Un giorno a caso nell'esistenza di Ricky</h2>
-    <p class="sotto">Perditi insieme a me.</p>
-    <div class="data attesa" id="data"><span class="vuoto">gg</span><span class="sep">·</span><span class="vuoto">mm</span><span class="sep">·</span><span class="vuoto">aaaa</span></div>
-    <p class="titolo" id="titolo"></p>
-    <ul class="film-del-giorno" id="filmGiorno"></ul>
-    <div class="azioni">
-      <button type="button" id="pesca">Pesca un giorno</button>
-      <a class="vai" id="vai" href="#" target="_blank" rel="noopener">guardalo su YouTube</a>
+      <div class="foglio-pag">
+        <div class="pagina">
+          <h3 class="capo-menu">À la carte</h3>
+          <p class="cappello">per gli abbonati</p>
+    <ol>
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">01</span><span class="voce">Gli Impossibili di Ricky</span><span class="punti"></span><span class="nota">film che non potevano esistere</span></a></li>
+
+      <li><details>
+        <summary class="riga-menu"><span class="n">02</span><span class="voce">Gran riserva</span><span class="punti"></span><span class="nota">il meglio delle serie</span><span class="segno" aria-hidden="true">+</span></summary>
+        <ul class="sotto-voci">
+          <li><a href="#" target="_blank" rel="noopener"><span class="titolo-corto">I dialoghi con Marietto</span><span class="glossa-corta">Don Chisciotte e Sancio Panza</span></a></li>
+          <li><a href="#" target="_blank" rel="noopener"><span class="titolo-corto">Le mie danze</span><span class="glossa-corta">gesti in libertà</span></a></li>
+        </ul>
+      </details></li>
+
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">03</span><span class="voce">Essere Poeta – Lezioni</span><span class="punti"></span><span class="nota">poeti in sei settimane</span></a></li>
+
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">04</span><span class="voce">Ricky on demand</span><span class="punti"></span><span class="nota">su vostra richiesta</span></a></li>
+
+      <li><a class="riga-menu" href="#" target="_blank" rel="noopener"><span class="n">05</span><span class="voce"><svg class="yt" viewBox="0 0 28 20" aria-hidden="true"><path class="scocca" d="M25.9 3.1c-.3-1.1-1.2-2-2.3-2.3C21.6.25 14 .25 14 .25s-7.6 0-9.6.55C3.3 1.1 2.4 2 2.1 3.1 1.55 5.1 1.55 10 1.55 10s0 4.9.55 6.9c.3 1.1 1.2 2 2.3 2.3 2 .55 9.6.55 9.6.55s7.6 0 9.6-.55c1.1-.3 2-1.2 2.3-2.3.55-2 .55-6.9.55-6.9s0-4.9-.55-6.9z"/><path class="play" d="M11.2 14.3L18.5 10l-7.3-4.3z"/></svg>Abbonati al canale</span><span class="punti"></span><span class="nota">apri la cantina</span></a></li>
+    </ol>
+        </div>
+      </div>
+
+      <div class="foglio-pag">
+        <div class="pagina pagina-omaggio caso">
+          <h3 class="capo-menu">Omaggio della casa</h3>
+          <p class="cappello">perditi insieme a me</p>
+          <ol class="voci-omaggio">
+            <li><span class="riga-menu">
+              <span class="n">01</span>
+              <span class="voce">Un giorno a caso nell'esistenza di Ricky</span>
+              <span class="punti"></span>
+              <button type="button" class="pesca" id="pesca">pesca un giorno</button>
+            </span></li>
+          </ol>
+          <div class="data attesa" id="data"><span class="vuoto">gg</span><span class="sep">·</span><span class="vuoto">mm</span><span class="sep">·</span><span class="vuoto">aaaa</span></div>
+          <p class="titolo" id="titolo"></p>
+          <ul class="film-del-giorno" id="filmGiorno"></ul>
+          <p class="riga-vai"><a class="vai" id="vai" href="#" target="_blank" rel="noopener">guardalo su YouTube</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="comandi" hidden>
+      <button type="button" class="indietro" aria-label="pagina precedente">&#8592;</button>
+      <span class="puntini">
+        <button type="button" class="pallino" data-va="0" aria-label="copertina"></button>
+        <button type="button" class="pallino" data-va="1" aria-label="All you can see"></button>
+        <button type="button" class="pallino" data-va="2" aria-label="À la carte"></button>
+        <button type="button" class="pallino" data-va="3" aria-label="Omaggio della casa"></button>
+      </span>
+      <button type="button" class="avanti" aria-label="pagina successiva">&#8594;</button>
     </div>
   </section>
 
@@ -137,6 +190,6 @@
   </nav>
 </footer>
 
-<script src="../js/produzioni.js?v=97" defer></script>
+<script src="../js/produzioni.js?v=107" defer></script>
 </body>
 </html>

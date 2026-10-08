@@ -25,23 +25,119 @@ main.stanza{flex:1;width:100%;background:var(--fondoStanza);color:var(--testo)}
   font-size:calc(clamp(1.45rem,4vw,2.2rem)*var(--scala))}
 .apertura-p h1 em{font-weight:300;color:var(--ten)}
 .apertura-p .glossa{margin:.8rem 0 0;font-style:italic;color:var(--ten);font-size:.98rem}
-/* ---- il marchio della casa ----------------------------------------------
-   Medaglione e scritta sono due immagini separate, non una sola: il
-   medaglione da solo serve altrove (favicon, segnalibro), la scritta no.
-   Nessun filo sopra: qui siamo nel primo blocco dopo l'apertura, e in tutto
-   il sito il primo blocco non ha mai il filo. Lo stacco lo fa la distanza.
+/* ---- il libro del menu --------------------------------------------------
+   Tre pagine che si voltano: copertina, All you can see, A la carte. Il
+   marchio sta sulla copertina, non piu' nell'apertura, se no comparirebbe
+   due volte a quattro centimetri di distanza.
+
+   Senza JavaScript i tre fogli restano uno sotto l'altro e il menu si legge
+   per intero: e' il programma ad aggiungere "acceso" alla sezione, e solo
+   allora i fogli vanno uno sopra l'altro e compaiono i comandi.
+
    Le due immagini hanno il fondo trasparente e il tratto gia' del colore
    dell'inchiostro di questa pagina: se un giorno il marchio va in una
    sezione con un inchiostro diverso, vanno rigenerate con quel colore. ---- */
-.marchio-casa{display:flex;flex-direction:column;align-items:center;gap:.7rem;
-  text-align:center;margin:clamp(2.6rem,6vw,3.4rem) 0 0}
-.dicitura{font-style:italic;color:var(--ten);font-size:.82rem}
-.marchio{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex:none}
-.marchio .logo{width:96px;height:96px;display:block}
-.marchio .scritta{width:154px;height:auto;display:block;opacity:.9}
+/* Il contorno e' lo stesso filo del riquadro "Un giorno a caso" piu' in basso
+   nella pagina: dice "questo e' un oggetto" con una frase che il sito usa gia'.
+   Senza, la copertina sembrava la fine della pagina e non la prima di tre. */
+.libro{border:1px solid var(--riga,rgba(42,29,23,.3));border-radius:2px;
+  padding:clamp(1rem,3vw,1.6rem) clamp(1rem,3vw,1.6rem) .9rem}
+.libro .cornice{position:relative}
+/* IL COLORE QUI E' PORTANTE, non decorativo: le pagine stanno una sopra
+   l'altra, e quella aperta copre le altre solo perche' e' opaca. Se --carta
+   non e' definita - base.css che tarda, che non arriva, che e' finito nel
+   posto sbagliato - il fondo diventa trasparente e si vedono tutte e quattro
+   le pagine sovrapposte, illeggibili. Il valore di riserva scritto a mano
+   serve a quello: non e' un doppione, e' una rete. */
+.libro .foglio-pag{background:var(--carta,#EADCD4)}
+.libro.acceso .cornice{overflow:hidden;perspective:1600px;
+  transition:height .8s cubic-bezier(.4,.05,.2,1)}
+.libro.acceso .foglio-pag{position:absolute;inset:0;
+  transform-origin:left center;backface-visibility:hidden;
+  transition:transform .8s cubic-bezier(.4,.05,.2,1)}
+.libro.acceso .foglio-pag.voltata{transform:rotateY(-168deg)}
+.libro .pagina{padding:clamp(1.2rem,3.5vw,2rem) 0}
+.libro.acceso .pagina{padding:clamp(1.2rem,3.5vw,2rem)}
+
+/* la copertina */
+.libro .copertina{display:flex;align-items:center;justify-content:center;
+  min-height:clamp(20rem,52vw,26rem);text-align:center}
+.libro .copertina .logo{width:112px;height:112px;display:block;margin:0 auto}
+.libro .copertina .scritta{width:180px;height:auto;display:block;margin:.5rem auto 0;opacity:.9}
+.libro .copertina .dicitura{margin:.7rem 0 0;font-style:italic;color:var(--ten);font-size:.82rem}
+.libro .copertina .invito{margin:2rem 0 0;font-size:0.78rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--acc);font-weight:500}
+/* una freccia si puo' non vedere, una parola no: l'invito sta solo sulla
+   copertina, dove serve, e sparisce appena il libro e' aperto */
+.libro .copertina .sfoglia{margin:.9rem 0 0;font-style:italic;color:var(--ten);font-size:.84rem}
+.libro .copertina .sfoglia::after{content:" \2192";font-style:normal}
 @media (max-width:560px){
-  .marchio .logo{width:78px;height:78px}
-  .marchio .scritta{width:125px}
+  .libro .copertina .logo{width:92px;height:92px}
+  .libro .copertina .scritta{width:148px}
+}
+
+/* ---- l'omaggio della casa: la quarta pagina ----
+   Stessa struttura delle altre: titolo, glossa, una voce con i puntini. Al
+   posto della nota a destra c'e' il bottone, che e' il punto dove l'occhio
+   arriva scorrendo la riga. A chiamare il clic bastano il contorno del bottone
+   e il velo che accende la riga al passaggio: la data lampeggia da sola. */
+.voci-omaggio{list-style:none;margin:1.1rem 0 0;padding:0}
+.voci-omaggio>li{border-top:1px solid var(--riga);border-bottom:1px solid var(--riga)}
+/* questa voce e' molto piu' lunga delle altre e deve dividere la riga con un
+   bottone: alla misura delle altre andava a capo e i puntini sparivano.
+   Serve ".menu" davanti perche' la regola generale sta piu' in basso in questo
+   stesso foglio e, a parita' di peso, vincerebbe lei. */
+.menu .pagina-omaggio .voce{font-size:calc(1.08rem*var(--scala))}
+/* la riga si accende come tutte le altre del menu, e si comporta come loro:
+   il clic vale su tutta la riga, non solo sul bottone (lo inoltra il
+   programma). Il bottone resta l'unico elemento vero, cosi' la tastiera
+   continua a trovarne uno solo. */
+.menu .pagina-omaggio .riga-menu{cursor:pointer}
+.pagina-omaggio .pesca{font-family:inherit;font-size:.86rem;background:none;cursor:pointer;
+  color:var(--acc);border:1px solid var(--acc);border-radius:2px;
+  padding:.3rem .95rem;flex:none;letter-spacing:.02em;
+  transition:background .25s ease,color .25s ease}
+@media (hover:hover){
+  .pagina-omaggio .pesca:hover{background:var(--acc);color:var(--fondoStanza)}
+}
+.pagina-omaggio .pesca:focus-visible{background:var(--acc);color:var(--fondoStanza)}
+.pagina-omaggio .data{text-align:center;margin:1.7rem auto .3rem}
+.pagina-omaggio .titolo{text-align:center}
+.pagina-omaggio .riga-vai{margin:.8rem 0 0;text-align:center;min-height:1.4em}
+.pagina-omaggio .film-del-giorno{margin-top:.7rem}
+/* fra i 561 e i 620 pixel la riga e' ancora elastica ma il bottone non ci sta
+   piu' accanto al titolo: scende sotto da solo. Sotto i 560 ci pensa la
+   griglia, piu' in basso in questo foglio. */
+@media (min-width:561px) and (max-width:620px){
+  .pagina-omaggio .riga-menu{flex-wrap:wrap}
+  .pagina-omaggio .punti{display:none}
+  .pagina-omaggio .voce{flex:1 1 0;min-width:0}
+  .pagina-omaggio .pesca{flex:0 0 100%;margin-top:.6rem;padding-top:.5rem;padding-bottom:.5rem}
+}
+
+/* il titolo di ciascuna carta */
+.libro .capo-menu{margin:0;font-weight:500;font-style:italic;
+  font-size:calc(clamp(1.08rem,2.8vw,1.3rem)*var(--scala))}
+.libro .cappello{margin:.12rem 0 0;font-style:italic;color:var(--ten);font-size:.82rem}
+.libro ol{margin-top:1.1rem}
+
+/* i comandi: frecce e pallini, come il lettore degli aforismi */
+/* i comandi stanno dentro il contorno, staccati dalle pagine da una riga:
+   cosi' si capisce che appartengono al libro e non alla pagina aperta */
+.libro .comandi{display:flex;align-items:center;justify-content:center;gap:1.1rem;
+  margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--riga,rgba(42,29,23,.3))}
+.libro .comandi button{background:none;border:0;font-family:inherit;cursor:pointer;
+  color:var(--ten);font-size:1.1rem;padding:.25rem .5rem;transition:color .25s ease}
+.libro .comandi button:disabled{opacity:.3;cursor:default}
+.libro .puntini{display:flex;gap:.5rem}
+.libro .comandi .pallino{width:7px;height:7px;border-radius:50%;padding:0;
+  background:color-mix(in srgb,var(--inchiostro) 28%,transparent);transition:background .25s ease}
+.libro .comandi .pallino[aria-current="true"]{background:var(--acc)}
+@media (hover:hover){
+  .libro .comandi button:hover:not(:disabled){color:var(--acc)}
+}
+@media (prefers-reduced-motion:reduce){
+  .libro.acceso .cornice,.libro.acceso .foglio-pag{transition:none}
 }
 
 section.blocco{margin-top:clamp(2.8rem,8vw,4.4rem)}
@@ -87,7 +183,9 @@ section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-s
 /* il marchio di YouTube, monocromatico come chiedono le loro regole */
 .menu .yt{width:1.15em;height:.82em;flex:none;margin-right:.45em;vertical-align:-.04em;display:inline-block}
 .menu .yt .scocca{fill:currentColor}
-.menu .yt .play{fill:var(--fondoStanza)}
+/* il triangolo e' un buco: deve avere il colore della carta, se no diventa
+   una macchia nera dentro il rettangolo */
+.menu .yt .play{fill:var(--fondoStanza,#EADCD4)}
 .fuori{margin:.9rem 0 0;font-size:0.78rem;font-style:italic;color:var(--ten)}
 
 /* ---- un giorno a caso ---- */
@@ -140,10 +238,46 @@ section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-s
 }
 
 @media (max-width:560px){
-  .menu .riga-menu{flex-wrap:wrap}
+  /* Sul telefono la riga smette di essere una fila elastica e diventa una
+     griglia: numero, titolo, segno "+", e sotto la glossa incolonnata col
+     titolo. Con le caselle elastiche un titolo lungo scivolava sotto il
+     numero (e "08" restava solo su una riga), oppure spingeva il "+" a capo
+     aprendo un buco fra titolo e glossa. Una griglia non puo' fare nessuna
+     delle due cose: ogni pezzo ha la sua casella. */
+  .menu .riga-menu{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+    column-gap:.9rem;row-gap:.15rem;align-items:baseline}
   .menu .punti{display:none}
-  .menu .nota{width:100%;text-align:left;margin-left:2.7em;max-width:100%;order:9}
-  .menu .segno{margin-left:auto}
+  /* ogni pezzo nella sua casella, riga compresa: il "+" sta scritto dopo la
+     glossa nel codice, e senza la riga fissata la griglia lo mandava a finire
+     su una terza riga tutta sua */
+  .menu .n{grid-column:1;grid-row:1}
+  .menu .voce{grid-column:2;grid-row:1}
+  .menu .segno{grid-column:3;grid-row:1;margin-left:0;align-self:baseline}
+  /* la glossa parte sotto il titolo, allineata a lui: non serve piu' nessun
+     margine a occhio, ci pensa la colonna */
+  /* la glossa parte da sinistra e si allinea al titolo con un margine, invece
+     di stare nella colonna del titolo: cosi' non paga ne' la colonna del "+"
+     ne' lo spazio fra le colonne, e guadagna una quarantina di pixel - che su
+     uno schermo stretto sono esattamente la differenza fra una riga e due.
+     Il margine vale quanto il numero (1,8 x 0,78rem) piu' lo spazio fra le
+     colonne (0,9rem): il risultato e' incolonnato col titolo come prima. */
+  .menu .nota{grid-column:1 / -1;grid-row:2;width:auto;margin-left:2.31rem;
+    text-align:left;max-width:100%}
+
+  /* le sottovoci si allineano allo stesso punto, e il titolo si lascia
+     stringere: senza, "Cosa pensi di Ricky Farina?" usciva dalla pagina e il
+     punto interrogativo restava tagliato fuori */
+  .menu .sotto-voci{padding-left:2.31rem}
+  .menu .sotto-voci a{flex-wrap:wrap}
+  /* flex:none sta piu' in basso in questo foglio e vincerebbe per ordine:
+     qui il titolo DEVE potersi stringere, se no esce dalla pagina */
+  .menu .sotto-voci .titolo-corto{flex:0 1 auto;min-width:0;overflow-wrap:anywhere}
+
+  /* la riga dell'omaggio ha un bottone al posto del segno: due colonne, e il
+     bottone sotto a tutta larghezza */
+  .menu .pagina-omaggio .riga-menu{grid-template-columns:auto minmax(0,1fr)}
+  .menu .pagina-omaggio .pesca{grid-column:1 / -1;margin-top:.6rem;
+    padding-top:.5rem;padding-bottom:.5rem}
 }
 @media (prefers-reduced-motion:reduce){
   .data.attesa,.artisti .nastro{animation:none}
@@ -162,6 +296,12 @@ section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-s
 /* le sottovoci hanno la loro glossa, come le voci madri ma piu' sommessa */
 .menu .sotto-voci a{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
 .menu .sotto-voci .titolo-corto{flex:none}
+/* sul telefono la regola qui sopra viene annullata, piu' su nel foglio: il
+   titolo deve potersi stringere invece di uscire dalla pagina. Ripetuta qui
+   perche' quella generale, stando dopo, vincerebbe per ordine di scrittura. */
+@media (max-width:560px){
+  .menu .sotto-voci .titolo-corto{flex:0 1 auto;min-width:0;overflow-wrap:anywhere}
+}
 .menu .sotto-voci .glossa-corta{font-style:italic;font-size:.82rem;
   color:color-mix(in srgb,var(--inchiostro) 62%,transparent)}
 /* Il trattino fa per le sottovoci quello che la fila di puntini fa per le
