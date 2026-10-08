@@ -150,9 +150,19 @@ section.blocco>.sotto{margin:.3rem 0 0;font-style:italic;color:var(--acc);font-s
 .menu .sotto-voci .titolo-corto{flex:none}
 .menu .sotto-voci .glossa-corta{font-style:italic;font-size:.82rem;
   color:color-mix(in srgb,var(--inchiostro) 62%,transparent)}
-/* un trattino stacca la glossa dal titolo della sottovoce */
-.menu .sotto-voci .glossa-corta::before{content:"\2013";margin-right:.45em;
-  font-style:normal;opacity:.55}
+/* Il trattino fa per le sottovoci quello che la fila di puntini fa per le
+   voci madri: separa il titolo dalla glossa quando stanno sulla stessa riga.
+   Compare quindi solo dove compaiono anche i puntini. */
+@media (min-width:561px){
+  .menu .sotto-voci .glossa-corta::before{content:"\2013";margin-right:.45em;
+    font-style:normal;opacity:.55}
+}
+/* Sul telefono i puntini spariscono e la glossa va sempre a capo, anche
+   quando sarebbe entrata nella riga: due glosse brevi restavano accanto al
+   titolo e le altre no. Senza riga condivisa, nessun separatore serve. */
+@media (max-width:560px){
+  .menu .sotto-voci .glossa-corta{flex:0 0 100%;margin-top:.1rem}
+}
 /* Le cinque stelle restano del colore del testo e si accendono solo al
    passaggio del mouse: un vanto che si scopre, non che si annuncia. */
 .menu .stelle{letter-spacing:.08em;font-size:.82em;
