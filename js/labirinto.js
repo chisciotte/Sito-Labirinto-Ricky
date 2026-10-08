@@ -22,7 +22,7 @@
   var trovati={};
 
   var elTesto=document.getElementById('testo');
-  var INVITO='Nove simboli nascosti.<br>Nove aforismi segreti.';
+  var INVITO='Nove simboli nascosti.<br>Nove aforismi inediti.';
 
   /* il cambio del testo al centro: dissolvenza, alone, fioritura */
   function scambiaTesto(html){
