@@ -42,7 +42,11 @@ main.stanza{flex:1;width:100%;background:var(--fondoStanza);color:var(--testo)}
    Senza, la copertina sembrava la fine della pagina e non la prima di tre. */
 .libro{border:1px solid var(--riga,rgba(42,29,23,.3));border-radius:2px;
   padding:clamp(1rem,3vw,1.6rem) clamp(1rem,3vw,1.6rem) .9rem}
-.libro .cornice{position:relative}
+/* Lo scorrimento verticale resta del browser, quello orizzontale e' nostro:
+   cosi' il dito che scorre la pagina non viene mai intercettato, e quello che
+   sfoglia non fa sobbalzare la pagina. Senza questa riga bisognerebbe
+   bloccare il gesto a mano, che e' il modo in cui di solito si rompe. */
+.libro .cornice{position:relative;touch-action:pan-y}
 /* IL COLORE QUI E' PORTANTE, non decorativo: le pagine stanno una sopra
    l'altra, e quella aperta copre le altre solo perche' e' opaca. Se --carta
    non e' definita - base.css che tarda, che non arriva, che e' finito nel

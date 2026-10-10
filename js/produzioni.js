@@ -235,5 +235,46 @@
   /* i caratteri arrivano dopo il primo disegno e cambiano le altezze */
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(misura);
 
+
+  /* ---------------------------------------------------------------
+     Sfogliare col dito. Solo dove un dito c'e' davvero: questi eventi
+     sul computer non arrivano mai, quindi non serve chiedere niente.
+     Le frecce restano: il dito e' una scorciatoia, non l'unica strada.
+     --------------------------------------------------------------- */
+  var BORDO=24,    /* i primi pixel ai lati sono del browser: indietro e avanti
+                      nella cronologia. Una gara che perderemmo sempre. */
+      SOGLIA=45,   /* sotto questa distanza e' un tocco incerto, non un gesto */
+      PENDENZA=1.2;/* quanto l'orizzontale deve battere il verticale */
+  var dx0=0,dy0=0,inAscolto=false,soffoca=false,timerSoffoca=null;
+
+  cornice.addEventListener('touchstart', function(e){
+    inAscolto=false;
+    if(e.touches.length!==1) return;        /* due dita: sara' uno zoom */
+    var t=e.touches[0];
+    if(t.clientX<BORDO || t.clientX>window.innerWidth-BORDO) return;
+    dx0=t.clientX; dy0=t.clientY; inAscolto=true;
+  }, {passive:true});
+
+  cornice.addEventListener('touchend', function(e){
+    if(!inAscolto) return;
+    inAscolto=false;
+    var t=e.changedTouches[0];
+    var dx=t.clientX-dx0, dy=t.clientY-dy0;
+    if(Math.abs(dx)<SOGLIA) return;                   /* troppo poco */
+    if(Math.abs(dx)<=Math.abs(dy)*PENDENZA) return;   /* stava scorrendo la pagina */
+    /* il dito e' partito sopra una voce del menu: il browser, finito il
+       gesto, manderebbe un clic su quella voce. Lo mangiamo noi. */
+    soffoca=true;
+    clearTimeout(timerSoffoca);
+    timerSoffoca=setTimeout(function(){ soffoca=false; }, 500);
+    vaiA(dx<0 ? qui+1 : qui-1);
+  }, {passive:true});
+
+  cornice.addEventListener('click', function(e){
+    if(!soffoca) return;
+    soffoca=false; clearTimeout(timerSoffoca);
+    e.preventDefault(); e.stopPropagation();
+  }, true);
+
   metti(true);   /* al caricamento non si sposta niente */
 })();
