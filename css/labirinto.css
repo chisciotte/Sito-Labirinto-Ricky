@@ -1,0 +1,155 @@
+/* =========================================================================
+   Solo la pagina del labirinto. Testata, piede, colori e carattere stanno
+   in base.css e sono condivisi con tutte le altre pagine.
+   ========================================================================= */
+html,body{height:100dvh;overflow:hidden}   /* la home non scorre mai */
+
+main{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;
+     padding:0 clamp(.5rem,2vw,1.6rem) clamp(.35rem,.9vw,.6rem);width:100%}
+.campo{position:relative;width:100%;max-width:1400px;margin:0 auto;touch-action:none}
+.campo svg.tavola{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+.muro{stroke:var(--muro);stroke-width:2.2;stroke-linecap:round;
+      opacity:0;animation:accendi .8s ease forwards}
+@keyframes accendi{to{opacity:1}}
+
+#tracciaScia{fill:none;stroke:var(--acc);stroke-width:2.4;
+             stroke-linecap:round;stroke-linejoin:round;opacity:.42}
+#muri line{transition:stroke .4s ease,stroke-width .4s ease,filter .4s ease}
+
+#oggetti g{color:var(--tratto);opacity:.5;transition:opacity .45s ease}
+#oggetti g.vicino{animation:battito 1.2s ease-in-out infinite}
+#oggetti g.sopra{opacity:1;animation:none}
+/* trovato: verde, fisso, spento. Non pulsa e non parla piu'. */
+#oggetti g.trovato{color:var(--verde);opacity:1;animation:none}
+@keyframes battito{0%,100%{opacity:.4}50%{opacity:1}}
+.testo.scambio{opacity:0 !important}
+.cieco .chi{display:block;font-style:normal;color:var(--dim);
+  font-size:.74em;letter-spacing:.06em;margin-top:.55em}
+.cieco{flex-direction:column}
+.cieco .testo{margin:0;transition:opacity .3s ease}
+/* l'invito iniziale pulsa cinque volte e poi resta acceso: serve a farsi
+   leggere prima che si cominci a girare, non a chiedere attenzione per sempre.
+   Sparisce al primo aforisma e non torna piu'. */
+@keyframes invito{0%,100%{opacity:1}52%{opacity:.3}}
+.cieco .testo.pulsa{animation:invito 1.9s cubic-bezier(.45,0,.35,1) 2.3s 3 both}
+@keyframes fiore{0%{text-shadow:0 0 15px var(--tenue),0 0 36px var(--tenue)}
+                 100%{text-shadow:0 0 0 transparent,0 0 0 transparent}}
+.testo.fiorisce{opacity:1;animation:fiore 1.15s cubic-bezier(.25,.6,.3,1) forwards}
+.alone{position:absolute;pointer-events:none;opacity:0;border-radius:50%;
+  background:radial-gradient(ellipse at center,var(--tenue) 0%,transparent 66%);
+  filter:blur(14px);transform:scale(1.55)}
+@keyframes respiro{0%{opacity:0}21%{opacity:.5}100%{opacity:0}}
+.alone.acceso{animation:respiro 1.45s cubic-bezier(.25,.6,.3,1) forwards}
+#oggetti path,#oggetti circle,#oggetti ellipse,#oggetti line{
+  fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#oggetti .pieno{fill:currentColor;stroke:none}
+#oggetti .sottile{stroke-width:1.35}
+
+#cavaliere{color:var(--tratto);transition:color .4s ease}
+#cavaliere path,#cavaliere ellipse,#cavaliere circle{fill:currentColor;stroke:none}
+
+.stanza{
+  position:absolute;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  gap:calc(var(--cella,60px)*.0265);
+  text-decoration:none;color:var(--tratto);padding:.3rem;
+  opacity:0;animation:accendi .7s ease forwards;animation-delay:1s;
+}
+.stanza .invito{
+  font-style:italic;font-size:calc(var(--cella,60px)*.26);color:var(--colore,var(--acc));
+  opacity:0;transform:translateY(4px);
+  transition:opacity .3s ease,transform .3s ease;order:-1;
+}
+.stanza .invito,.stanza .nome,.stanza .glossa{
+  /* un alone scuro sotto le lettere: le tiene leggibili anche quando la luce
+     del muro arriva a lambirle */
+  text-shadow:0 0 3px var(--sfondo),0 0 7px var(--sfondo),0 0 12px var(--sfondo);
+}
+.stanza .nome{
+  font-size:calc(var(--cella,60px)*.3485);font-weight:var(--pesoTit);
+  letter-spacing:var(--track);line-height:1.14;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),color .3s ease;
+}
+.stanza .glossa{
+  font-style:italic;font-size:calc(var(--cella,60px)*.2416);color:var(--tenue);
+  line-height:1.25;max-width:21ch;
+  opacity:0;transform:translateY(-3px);
+  transition:opacity .28s ease,transform .28s ease;
+}
+.stanza:hover .glossa,.stanza:focus-visible .glossa{opacity:1;transform:none}
+.stanza.attiva .nome{transform:scale(1.11);color:var(--colore)}
+.stanza.attiva .glossa,.stanza.attiva .invito{opacity:1;transform:none}
+/* "entra" pulsa per tutto il tempo in cui Chisciotte e' dentro la stanza,
+   che ci sosti o che la stia solo attraversando. Usa lo stesso battito dei
+   simboli – stessa animazione, stesso ritmo – cosi' nel sito una cosa che
+   pulsa vuol dire sempre la stessa cosa.
+   Il battito parte subito, senza ritardo: comincia dal suo punto piu' scuro e
+   sale, e questa salita e' gia' la comparsa. Con un ritardo, "entra" arrivava
+   a piena luce e poi il battito lo riportava di colpo al 40%: uno scatto. */
+.stanza.attiva .invito{animation:battito 1.2s ease-in-out infinite}
+.stanza:focus-visible{outline:2px solid var(--colore,var(--acc));outline-offset:6px;border-radius:2px}
+
+/* ---- mulino ---- */
+.centro{position:absolute;display:flex;align-items:center;justify-content:center;
+        pointer-events:none;opacity:0;animation:accendi 1.1s ease forwards;animation-delay:1.2s}
+.mulino{width:auto;height:88%;max-height:100%;overflow:visible}
+.mulino .fermo{fill:none;stroke:var(--dim);stroke-width:2;
+               stroke-linecap:round;stroke-linejoin:round}
+.mulino .pale{fill:none;stroke:var(--tratto);stroke-width:2;
+              stroke-linecap:round;stroke-linejoin:round}
+
+.cieco{transition:opacity .3s ease;position:absolute;display:flex;align-items:center;justify-content:center;
+       text-align:center;font-style:italic;color:var(--tratto);pointer-events:none;
+       font-size:calc(var(--cella,60px)*.3035);line-height:1.4;padding:.25rem;
+       opacity:0;animation:accendi .7s ease forwards;animation-delay:1.6s}
+
+
+@media (max-aspect-ratio:1/1){
+  main{align-items:center;padding-top:.2rem}
+  /* sul telefono il blocco di testo va tenuto stretto: la glossa usa tutta la
+     larghezza della stanza, e interlinee e spazi si accorciano quel tanto che
+     basta perche' non tocchi i muri. Le misure dei caratteri non cambiano. */
+  /* sul telefono una cella e' troppo piccola per farci dipendere il testo:
+     si tornerebbe a corpi illeggibili. Qui valgono le misure in rem. */
+  .stanza{gap:.04rem}
+  .stanza .invito{font-size:calc(.63rem*var(--scala,1))}
+  .stanza .nome{font-size:calc(.78rem*var(--scala,1));line-height:1.06}
+  .stanza .glossa{font-size:calc(.58rem*var(--scala,1));max-width:100%;line-height:1.15}
+  .cieco{font-size:calc(.66rem*var(--scala,1))}
+  .testata{padding-top:.7rem;padding-bottom:.35rem}
+  .piede{padding-top:.45rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .muro,.stanza,.centro,.cieco{animation:none;opacity:1}
+  .stanza .nome,.stanza .glossa,.stanza .invito{transition:none}
+  .cieco .testo.pulsa,.stanza.attiva .invito{animation:none}
+}
+
+/* ============ le regolazioni: suono e movimento ============
+   Stanno SOPRA la testata, non dentro il suo flusso: cosi' non la allungano
+   e il labirinto mantiene la sua misura. */
+.regolazioni{
+  position:absolute;right:clamp(1rem,4vw,2.6rem);top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;align-items:flex-end;gap:.1rem;
+}
+.regola{display:flex;align-items:center;gap:.4rem;background:none;border:0;
+  padding:.08rem 0;cursor:pointer;font-family:inherit;font-style:italic;
+  font-size:.72rem;color:var(--dim);line-height:1}
+.regola:hover,.regola:focus-visible{color:var(--tratto)}
+.regola svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* Su computer: la parola di stato segue subito l'icona, e ha sempre la stessa
+   larghezza in entrambe le righe – quella di "mouse e click". Cosi' le due
+   icone stanno in colonna e cambiando stato niente si sposta.
+   Sul telefono resta solo il suono: li' la parola ha la sua larghezza vera,
+   e il comando sta a filo del margine destro, opposto a "Ricky Farina". */
+.regola .stato{font-style:normal;text-align:left;color:var(--tenue);min-width:6.4em}
+@media (max-aspect-ratio:1/1){ .regola .stato{min-width:0} }
+.regola[aria-pressed="false"] .stato{color:var(--dim)}
+.regola .onde{opacity:1;transition:opacity .2s ease}
+.regola .barra{opacity:0;transition:opacity .2s ease}
+.regola[aria-pressed="false"] .onde{opacity:0}
+.regola[aria-pressed="false"] .barra{opacity:1}
+/* sul telefono non c'e' mouse: resta solo il suono */
+@media (max-aspect-ratio:1/1){ .segui{display:none} }

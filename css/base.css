@@ -1,0 +1,167 @@
+/* =========================================================================
+   rickyfarina.it – foglio condiviso da tutte le pagine.
+   Qui sta solo cio' che deve restare IDENTICO ovunque: carattere, colori,
+   testata e piede. Cambiare qualcosa qui la cambia in tutto il sito.
+   ========================================================================= */
+
+/* ---- il carattere, ospitato sul nostro dominio ----------------------------
+   Fraunces, licenza SIL Open Font License. I due file sono gia' in font/.
+   Tenerli qui invece di chiamarli da Google evita che il browser del
+   visitatore contatti un server esterno: nessun dato a terzi, nessuna attesa
+   di rete e nessuno spostamento del testo a caricamento avvenuto. ---------- */
+@font-face{
+  font-family:"Fraunces";
+  src:url("../font/fraunces.woff2") format("woff2-variations"),
+      url("../font/fraunces.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Fraunces";
+  src:url("../font/fraunces-corsivo.woff2") format("woff2-variations"),
+      url("../font/fraunces-corsivo.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:italic;
+  font-display:swap;
+}
+
+:root{
+  /* tema notte */
+  --sfondo:#0D1520;
+  --tratto:#E8E3D6;
+  --tenue:rgba(232,227,214,.62);
+  --acc:#B8402E;
+  --dim:#66788E;
+  --muro:#3E5068;
+  --verde:#63C98A;        /* i simboli gia' trovati */
+
+  /* il colore di ogni sezione: lo stesso della luce nel labirinto */
+  --produzioni:#C0503A;      /* rosso: il colore del cinema */
+  --collaborazioni:#D8A22A;  /* oro */
+  --aforismi:#5F9E7D;
+  --articoli:#6E9BC4;
+  --chisono:#A07CC4;
+
+  /* Le stanze delle sezioni. Ogni sezione ha tre valori che vanno insieme:
+     la LUCE (satura, e' quella che si accende nel labirinto), la CARTA
+     (slavata, e' il fondo della sua pagina) e il tono VIVO (scuro e acceso,
+     per cio' che si tocca). La carta e la luce sono la stessa tinta a due
+     intensita' diverse: e' questo che tiene insieme porta e stanza. */
+  --sezione:var(--acc);      /* ogni pagina di sezione lo ridefinisce */
+
+  /* tipografia */
+  --font:"Fraunces",Georgia,"Times New Roman",serif;
+  --peso:300;
+  --pesoTit:500;
+  --track:.01em;
+  --scala:1.06;              /* correzione ottica: i file che usiamo sono
+                                bloccati sulla taglia da titoli, che ha le
+                                lettere minuscole piu' basse. Se un giorno
+                                passiamo ai file con tutti gli assi, torna .98 */
+
+  /* altezze fisse di testata e piede: sono queste a impedire che la pagina
+     "salti" passando da una all'altra */
+  --testata:3.5rem;
+  --piede:2.9rem;
+
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scrollbar-gutter:stable}          /* niente scatto quando compare la barra */
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--sfondo);
+  color:var(--tratto);
+  font-family:var(--font);
+  font-weight:var(--peso);
+  -webkit-font-smoothing:antialiased;
+  /* Nei file attuali gli assi SOFT e WONK sono bloccati, quindi questa riga
+     non ha effetto: la teniamo perche' tornerebbe utile con i file completi. */
+  font-variation-settings:"SOFT" 30,"WONK" 1;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---- testata ------------------------------------------------------------
+   Nome e mestiere stanno insieme a sinistra. L'altezza della testata la
+   decide solo questo lato, identico in tutte le pagine: e' cio' che tiene
+   ferma la pagina quando si passa da una sezione all'altra. -------------- */
+.testata{
+  position:relative;
+  flex:none;
+  min-height:var(--testata);
+  display:flex;
+  align-items:center;
+  padding:clamp(.8rem,1.7vw,1.15rem) clamp(1rem,4vw,2.6rem) clamp(.4rem,.9vw,.6rem);
+}
+.sinistra{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap}
+.firma{
+  font-size:calc(clamp(1rem,2vw,1.28rem)*var(--scala));
+  letter-spacing:.09em;
+  font-weight:var(--pesoTit);
+  color:var(--tratto);
+  text-decoration:none;
+}
+a.firma:hover,a.firma:focus-visible{color:var(--sezione)}
+.mestiere{
+  font-style:italic;
+  color:var(--dim);
+  font-size:calc(clamp(.82rem,1.6vw,.98rem)*var(--scala));
+}
+/* sul telefono il mestiere va sotto il nome: su una riga non ci sta */
+@media (max-aspect-ratio:1/1){
+  .sinistra{flex-direction:column;gap:.1rem}
+}
+
+/* ---- piede -------------------------------------------------------------- */
+.piede{
+  flex:none;
+  min-height:var(--piede);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.8rem 1.6rem;
+  flex-wrap:wrap;
+  padding:.6rem clamp(1rem,4vw,2.6rem) calc(.75rem + env(safe-area-inset-bottom));
+  border-top:1px solid var(--muro);
+  font-size:.78rem;   /* 12,5 px: la misura minima che teniamo ovunque */
+  color:var(--dim);
+}
+.piede .marchio{letter-spacing:.06em;color:var(--tratto);font-weight:var(--pesoTit)}
+.piede nav{display:flex;gap:1.1rem}
+.piede a{color:var(--dim);text-decoration:none;transition:color .25s ease}
+/* nel piede niente lineette al passaggio del mouse: i rimandi si schiariscono,
+   come le insegne accanto a loro */
+.piede a:hover,.piede a:focus-visible{color:var(--tratto)}
+
+@media (max-height:520px){
+  .testata{padding-top:.4rem;padding-bottom:.2rem}
+  .piede{padding-top:.3rem;padding-bottom:calc(.35rem + env(safe-area-inset-bottom));font-size:.78rem}
+  .firma{font-size:.95rem}
+  .mestiere{font-size:.78rem}
+}
+
+/* ---- le stanze: ogni pagina di sezione dichiara la sua con una classe ---- */
+/* L'oro (ora di Collaborazioni) e' la tinta piu' difficile: per restare
+   leggibile come inchiostro deve scurirsi fino al bronzo, allontanandosi dal
+   neon della home. Si accorcia la distanza schiarendo la carta invece che
+   scurendo l'inchiostro. L'oro vero torna comunque nella stanza come luce:
+   e' il velo delle voci toccate. */
+body.s-produzioni   {--sezione:var(--produzioni);   --carta:#EADCD4;--inchiostro:#2A1D17;--vivo:#8E3020;--riga:rgba(42,29,23,.3); --velo:rgba(192,80,58,.2)}
+body.s-collaborazioni{--sezione:var(--collaborazioni);--carta:#F3ECDD;--inchiostro:#241E14;--vivo:#8A6414;--riga:rgba(36,30,20,.3); --velo:rgba(216,162,42,.26)}
+body.s-aforismi     {--sezione:var(--aforismi);     --carta:#DEE4DC;--inchiostro:#1B241E;--vivo:#186349;--riga:rgba(27,36,30,.3); --velo:rgba(95,158,125,.22)}
+body.s-articoli     {--sezione:var(--articoli);     --carta:#DEE3E8;--inchiostro:#171C22;--vivo:#1A5078;--riga:rgba(23,28,34,.3); --velo:rgba(110,155,196,.22)}
+body.s-chisono      {--sezione:var(--chisono);      --carta:#E3DCE9;--inchiostro:#211B27;--vivo:#5B368A;--riga:rgba(33,27,39,.3); --velo:rgba(160,124,196,.22)}
+/* privacy, cookie e vicolo cieco: una stanza neutra, senza colore di sezione */
+body.s-nota         {--sezione:#5E5442;            --carta:#E6E1D6;--inchiostro:#201D16;--vivo:#5E5442;--riga:rgba(32,29,22,.28);--velo:rgba(94,84,66,.16)}
+
+/* le tre insegne nel piede, prima dei rimandi legali */
+.social-piede{display:inline-flex;gap:.7rem;align-items:center;margin-right:.4rem}
+/* le insegne non sono rimandi di testo: niente lineetta sotto, si schiariscono e basta */
+.segno-piede{display:inline-flex;color:inherit;opacity:.7;border-bottom:0;padding-bottom:0;
+  transition:opacity .25s ease,color .25s ease}
+.piede .segno-piede:hover,.piede .segno-piede:focus-visible{border-bottom-color:transparent;border-bottom:0}
+.segno-piede svg{width:17px;height:17px;display:block}
+.segno-piede:hover,.segno-piede:focus-visible{opacity:1;color:var(--tratto)}
